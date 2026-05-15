@@ -60,3 +60,8 @@ require (
 
 // Personal fork for learning purposes - studying etcd's raft implementation
 // and distributed consensus mechanisms. Not intended for production use.
+//
+// Study notes:
+//   - go.etcd.io/raft/v3: core raft consensus library, focus area for learning
+//   - go.etcd.io/bbolt: underlying persistent storage engine (B+ tree)
+//   - See /docs/learning/ for personal notes on the raft log replication flow

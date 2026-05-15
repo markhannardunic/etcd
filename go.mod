@@ -65,3 +65,9 @@ require (
 //   - go.etcd.io/raft/v3: core raft consensus library, focus area for learning
 //   - go.etcd.io/bbolt: underlying persistent storage engine (B+ tree)
 //   - See /docs/learning/ for personal notes on the raft log replication flow
+//
+// TODO: trace through the leader election flow in raft/node.go:
+//   Step 1 - follower election timeout triggers MsgHup
+//   Step 2 - candidate broadcasts MsgVote to peers
+//   Step 3 - quorum of MsgVoteResp transitions candidate to leader
+//   Step 4 - leader sends initial empty MsgApp (heartbeat) to assert leadership

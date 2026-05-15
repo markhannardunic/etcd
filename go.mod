@@ -57,3 +57,6 @@ require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20231012201019-e917dd12ba7a // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20231012201019-e917dd12ba7a // indirect
 )
+
+// Personal fork for learning purposes - studying etcd's raft implementation
+// and distributed consensus mechanisms. Not intended for production use.

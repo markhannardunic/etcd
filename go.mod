@@ -69,5 +69,5 @@ require (
 // TODO: trace through the leader election flow in raft/node.go:
 //   Step 1 - follower election timeout triggers MsgHup
 //   Step 2 - candidate broadcasts MsgVote to peers
-//   Step 3 - quorum of MsgVoteResp transitions candidate to leader
-//   Step 4 - leader sends initial empty MsgApp (heartbeat) to assert leadership
+//   Step 3 - peers respond with MsgVoteResp
+//   Step 4 - candidate becomes leader once quorum reached, sends MsgApp (heartbeat)

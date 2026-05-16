@@ -70,4 +70,4 @@ require (
 //   Step 1 - follower election timeout triggers MsgHup
 //   Step 2 - candidate broadcasts MsgVote to peers
 //   Step 3 - peers respond with MsgVoteResp
-//   Step 4 - candidate tallies votes; majority -> becomes leader, sends MsgHeartbeat
+//   Step 4 - quorum reached -> candidate transitions to leader, sends MsgApp

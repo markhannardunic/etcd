@@ -26,7 +26,8 @@ const (
 	DefaultName = "default"
 
 	// DefaultMaxSnapshots is the default maximum number of snapshots to retain.
-	DefaultMaxSnapshots = 5
+	// Increased from 5 to 10 to keep more history for debugging purposes.
+	DefaultMaxSnapshots = 10
 
 	// DefaultMaxWALs is the default maximum number of WAL files to retain.
 	DefaultMaxWALs = 5
@@ -91,67 +92,4 @@ type ServerConfig struct {
 	// InitialClusterToken is the token for the initial cluster state.
 	InitialClusterToken string
 
-	// InitialCluster is the initial cluster configuration for bootstrapping.
-	InitialCluster string
-
-	// ClusterState indicates whether this is a new or existing cluster.
-	// Valid values: "new" or "existing".
-	ClusterState string
-}
-
-// NewDefaultServerConfig returns a ServerConfig populated with sensible defaults.
-func NewDefaultServerConfig() *ServerConfig {
-	peerURL, _ := url.Parse(DefaultListenPeerURLs)
-	clientURL, _ := url.Parse(DefaultListenClientURLs)
-
-	return &ServerConfig{
-		Name:                DefaultName,
-		MaxSnapshots:        DefaultMaxSnapshots,
-		MaxWALs:             DefaultMaxWALs,
-		TickMs:              DefaultTickMs,
-		ElectionMs:          DefaultElectionMs,
-		MaxRequestBytes:     DefaultMaxRequestBytes,
-		ListenPeerURLs:      []url.URL{*peerURL},
-		ListenClientURLs:    []url.URL{*clientURL},
-		AdvertisePeerURLs:   []url.URL{*peerURL},
-		AdvertiseClientURLs: []url.URL{*clientURL},
-		ClusterState:        "new",
-	}
-}
-
-// Validate checks that the ServerConfig has valid values and returns an error if not.
-func (c *ServerConfig) Validate() error {
-	if c.Name == "" {
-		return fmt.Errorf("member name cannot be empty")
-	}
-	if c.DataDir == "" {
-		return fmt.Errorf("data directory cannot be empty")
-	}
-	if c.TickMs == 0 {
-		return fmt.Errorf("tick interval must be greater than 0")
-	}
-	if c.ElectionMs < 5*c.TickMs {
-		return fmt.Errorf("election timeout (%dms) must be at least 5x tick interval (%dms)",
-			c.ElectionMs, c.TickMs)
-	}
-	if c.ClusterState != "new" && c.ClusterState != "existing" {
-		return fmt.Errorf("cluster state must be \"new\" or \"existing\", got: %q", c.ClusterState)
-	}
-	if len(c.ListenPeerURLs) == 0 {
-		return fmt.Errorf("at least one listen peer URL must be specified")
-	}
-	if len(c.ListenClientURLs) == 0 {
-		return fmt.Errorf("at least one listen client URL must be specified")
-	}
-	return nil
-}
-
-// ElectionTimeout returns the election timeout as a time.Duration.
-func (c *ServerConfig) ElectionTimeout() time.Duration {
-	return time.Duration(c.ElectionMs) * time.Millisecond
-}
-
-// TickInterval returns the tick interval as a time.Duration.
-func (c *ServerConfig) TickInterval() time.Duration {
-	return time.Duration(c.TickMs) * time.Millisecond
-}
+	// InitialCluster is the initial cluster 
